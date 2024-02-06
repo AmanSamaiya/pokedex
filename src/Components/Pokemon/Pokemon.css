@@ -1,0 +1,24 @@
+.pokemon-data{
+    flex-basis: 25%;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color:#ffebbb;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.pokemon-data:hover{
+    background-color: rgb(231, 203, 167);
+    transition: ease-in;
+    transition-duration: .2s;
+    scale: 105%;
+    box-shadow: 0 0 10px black;
+}
+
+.pokemon-data img {
+    min-height: 100px;
+    max-height: 200px;
+    min-width: 100px;
+    max-width: 200px;
+}

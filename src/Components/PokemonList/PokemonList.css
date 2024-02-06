@@ -1,0 +1,28 @@
+.pokemon-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.search-btn {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 2rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  background-color: tan;
+  height: 30px;
+  width: 100px;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #ffebbb;
+  border: 2px solid black;
+}
