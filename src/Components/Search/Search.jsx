@@ -5,7 +5,7 @@ function Search() {
   return (
     <div>
       <input type="text" placeholder="Enter the Pokemon name" />  
-      <button type="submit">GO</button>    
+      <button className="search-button" type="submit">Search</button>    
     </div>
   );
 }

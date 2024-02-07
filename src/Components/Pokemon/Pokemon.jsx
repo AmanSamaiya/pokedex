@@ -4,7 +4,7 @@ import "../Pokemon/Pokemon.css";
 function Pokemon({ name, type, image, id }) {
   return (
     <div className="pokemon-data">
-      <Link to={`/${id}`}>
+      <Link className="link" to={`/${id}`}>
         <div>
           <p>{name}</p>
           <img src={image} alt="" />

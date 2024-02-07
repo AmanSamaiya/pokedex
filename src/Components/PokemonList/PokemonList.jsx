@@ -5,16 +5,16 @@ import Pokemon from "../Pokemon/Pokemon.jsx";
 
 function PokemonList() {
   const defaultUrl = "https://pokeapi.co/api/v2/pokemon";
-  const [pokemon, setPokemon] = useState([]);
-  const [pokemonUrl, setPokemonUrl] = useState(defaultUrl);
-  const [nextUrl, setNextUrl] = useState(defaultUrl);
-  const [prevUrl, setPrevUrl] = useState(defaultUrl);
+  const [pokemonListState, setPokemonListState] = useState({
+    pokemon : [],
+    pokemonUrl : defaultUrl,
+    nextUrl : defaultUrl,
+    prevUrl : defaultUrl
+  });
 
   async function pokemonData() {
-    const response = await axios.get(pokemonUrl ? pokemonUrl : defaultUrl);
+    const response = await axios.get(pokemonListState.pokemonUrl ? pokemonListState.pokemonUrl : defaultUrl);
     const responseData = response.data.results;
-    setNextUrl(response.data.next);
-    setPrevUrl(response.data.previous);
 
     const pokemonPromise = responseData.map((pokemon) =>
       axios.get(pokemon.url)
@@ -32,27 +32,27 @@ function PokemonList() {
       };
     });
 
-    setPokemon(pokemonFinalData);
+    setPokemonListState({...pokemonListState, pokemon:pokemonFinalData, nextUrl:response.data.next, prevUrl:response.data.previous});
   }
 
   useEffect(() => {
     pokemonData();
-  }, [pokemonUrl]);
+  }, [pokemonListState.pokemonUrl]);
 
  
   return (
     <>
-      <h1>Pokemon List</h1>
+      <h1 style={{letterSpacing:8}}>Pokemon List</h1>
       <div className="search-btn">
-        <button onClick={() => setPokemonUrl(prevUrl)} className="btn">
+        <button onClick={() =>  setPokemonListState({...pokemonListState , pokemonUrl:pokemonListState.prevUrl})} className="btn">
           Previous
         </button>
-        <button onClick={() => setPokemonUrl(nextUrl)} className="btn">
+        <button onClick={() => setPokemonListState({...pokemonListState , pokemonUrl:pokemonListState.nextUrl})} className="btn">
           Next
         </button>
       </div>
       <div className="pokemon-card">
-        {pokemon.map((poke) => (
+        {pokemonListState.pokemon.map((poke) => (
           <Pokemon
             name={poke.name}
             key={poke.id}

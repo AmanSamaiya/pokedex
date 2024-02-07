@@ -8,6 +8,17 @@
     margin-bottom: 1rem;
 }
 
+.pokemon-data p {
+    color: black;
+    letter-spacing: 5px;
+    font-weight: 700;
+    font-size: large;
+}
+
+.link{
+    text-decoration: none;
+}
+
 .pokemon-data:hover{
     background-color: rgb(231, 203, 167);
     transition: ease-in;
