@@ -1,33 +1,11 @@
 import "../PokemonDetailsPage/PokemonDetails.css";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import usePokemonDetails from "../../hooks/usePokemonDetails";
 
 function PokemonDetails() {
-  const [pokemonDetail, setPokemonDetail] = useState(null);
 
   const { id } = useParams();
-  console.log(id);
-  const defaultUrl = `https://pokeapi.co/api/v2/pokemon/${id}`;
-
-  async function getDetails() {
-    const response = await axios.get(defaultUrl);
-    const pokemon = response.data;
-    setPokemonDetail({
-      id: pokemon.id,
-      name: pokemon.name,
-      image: pokemon.sprites.other.dream_world.front_default,
-      imagebg: pokemon.sprites.other.home.front_default,
-      type: pokemon.types,
-      height: pokemon.height,
-      weight: pokemon.weight,
-    });
-  }
-
-  useEffect(() => {
-    getDetails();
-  }, []);
+  const [pokemonDetail] = usePokemonDetails(id);
 
   return (
     pokemonDetail && (
