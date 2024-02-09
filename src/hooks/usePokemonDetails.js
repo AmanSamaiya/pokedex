@@ -1,14 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import downloadPokemons from "../utils/downloadPokemons";
 
 function usePokemonDetails (id){
+
+  const POKEMON_DETAIL_URL = "https://pokeapi.co/api/v2/pokemon/";
+
     const [pokemonDetail, setPokemonDetail] = useState(null);
 
-   
-    const defaultUrl = `https://pokeapi.co/api/v2/pokemon/${id}`;
+    const [pokemonListState, setPokemonListState] = useState({
+      pokemon : [],
+      pokemonUrl : '',
+      nextUrl : '',
+      prevUrl : '',
+    });
   
-    async function getDetails() {
-      const response = await axios.get(defaultUrl);
+
+   
+    async function getDetailsofOnePokemon(id) {
+      const response = await axios.get(POKEMON_DETAIL_URL + id);
       const pokemon = response.data;
       setPokemonDetail({
         id: pokemon.id,
@@ -18,14 +28,24 @@ function usePokemonDetails (id){
         type: pokemon.types,
         height: pokemon.height,
         weight: pokemon.weight,
+        moves : pokemon.moves
       });
+      const types = pokemon.types.map((t)=> t.type.name);
+      return types[0];
+    }
+
+    async function downloadPokemonandRelated(id){
+       const type = await getDetailsofOnePokemon(id);
+        
+        await downloadPokemons(pokemonListState , setPokemonListState , `https://pokeapi.co/api/v2/type/${type}`);
     }
   
     useEffect(() => {
-      getDetails();
-    }, []);
+      downloadPokemonandRelated(id);
+      window.scrollTo({top:0,left:0, behavior:"smooth"})
+    }, [id]);
 
-    return [pokemonDetail];
+    return [pokemonDetail , pokemonListState];
 }
 
 export default usePokemonDetails;
