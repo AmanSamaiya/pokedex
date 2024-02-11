@@ -1,12 +1,12 @@
 import "../PokemonDetailsPage/PokemonDetails.css";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import usePokemonDetails from "../../hooks/usePokemonDetails";
 import Pokemon from "../Pokemon/Pokemon";
 
-function PokemonDetails() {
+function PokemonDetails({pokemonName}) {
 
-  const { id } = useParams();
-  const [pokemonDetail,pokemonListState] = usePokemonDetails(id);
+  
+  const [pokemonDetail,pokemonListState] = usePokemonDetails(pokemonName);
   
 
   return (
@@ -44,7 +44,7 @@ function PokemonDetails() {
        
            <div className="moves">
             <h3 style={{fontSize:30 , letterSpacing:10 , textDecoration:"underline"}}>Moves</h3>
-            {pokemonDetail.moves.map((move)=> <h4>{move.move.name}</h4>)}
+            {pokemonDetail.moves.map((move)=> <h4 key={move.move.name}>{move.move.name}</h4>)}
           </div>
 
         </div>
